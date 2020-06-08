@@ -1,0 +1,341 @@
+{
+	"info": {
+		"_postman_id": "728b9c39-f510-4d70-8673-b4d24c021c1c",
+		"name": "API Webmotors",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET {Make}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7312bd6c-7ec0-40f4-a073-01eb93de86cf",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Validando que o ID 2 e o name Honda\", function () {",
+							"    pm.expect(jsonData[1].ID).to.eql(2);",
+							"    pm.expect(jsonData[1].Name).to.eql(\"Honda\");",
+							"});",
+							"",
+							"pm.test(\"Validando que o ID 1 e 3 não tem relação com o name Honda\", function () {",
+							"    pm.expect(jsonData[0].ID).to.not.eql(2);",
+							"    pm.expect(jsonData[0].Name).to.not.eql(\"Honda\");",
+							"    pm.expect(jsonData[2].ID).to.not.eql(2);",
+							"    pm.expect(jsonData[2].Name).to.not.eql(\"Honda\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://desafioonline.webmotors.com.br/api/OnlineChallenge/Make",
+					"protocol": "http",
+					"host": [
+						"desafioonline",
+						"webmotors",
+						"com",
+						"br"
+					],
+					"path": [
+						"api",
+						"OnlineChallenge",
+						"Make"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET {MakeID}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7312bd6c-7ec0-40f4-a073-01eb93de86cf",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response contém City\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"City\");",
+							"});",
+							"",
+							"pm.test(\"Validando que o MakeID=2, ID=4, Name=City\", function () {",
+							"    pm.expect(jsonData[0].ID).to.eql(4);",
+							"    pm.expect(jsonData[0].Name).to.eql(\"City\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://desafioonline.webmotors.com.br/api/OnlineChallenge/Model?MakeID=2",
+					"protocol": "http",
+					"host": [
+						"desafioonline",
+						"webmotors",
+						"com",
+						"br"
+					],
+					"path": [
+						"api",
+						"OnlineChallenge",
+						"Model"
+					],
+					"query": [
+						{
+							"key": "MakeID",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET {ModelID}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7312bd6c-7ec0-40f4-a073-01eb93de86cf",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Versões relacionadas ao Honda City\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"1.5 DX 16V FLEX 4P AUTOMÁTICO\");",
+							"    pm.expect(pm.response.text()).to.include(\"1.5 LX 16V FLEX 4P MANUAL\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://desafioonline.webmotors.com.br/api/OnlineChallenge/Version?ModelID=4",
+					"protocol": "http",
+					"host": [
+						"desafioonline",
+						"webmotors",
+						"com",
+						"br"
+					],
+					"path": [
+						"api",
+						"OnlineChallenge",
+						"Version"
+					],
+					"query": [
+						{
+							"key": "ModelID",
+							"value": "4"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET {Vehicles}/Page=1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7312bd6c-7ec0-40f4-a073-01eb93de86cf",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Contém Honda City e sua versão na página 1\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Honda\");",
+							"    pm.expect(pm.response.text()).to.include(\"City\");",
+							"});",
+							"",
+							"pm.test(\"Validando os campos Honda City e sua versão na página 1\", function () {",
+							"    pm.expect(jsonData[0].ID).to.eql(1);",
+							"    pm.expect(jsonData[0].Make).to.eql(\"Honda\");",
+							"    pm.expect(jsonData[0].Model).to.eql(\"City\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://desafioonline.webmotors.com.br/api/OnlineChallenge/Vehicles?Page=1",
+					"protocol": "http",
+					"host": [
+						"desafioonline",
+						"webmotors",
+						"com",
+						"br"
+					],
+					"path": [
+						"api",
+						"OnlineChallenge",
+						"Vehicles"
+					],
+					"query": [
+						{
+							"key": "Page",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET {Vehicles}/Page=2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7312bd6c-7ec0-40f4-a073-01eb93de86cf",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Contém Honda City e sua versão na página 2\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Honda\");",
+							"    pm.expect(pm.response.text()).to.include(\"City\");",
+							"});",
+							"",
+							"pm.test(\"Validando os campos Honda City e sua versão na página 2\", function () {",
+							"    pm.expect(jsonData[4].ID).to.eql(15);",
+							"    pm.expect(jsonData[4].Make).to.eql(\"Honda\");",
+							"    pm.expect(jsonData[4].Model).to.eql(\"City\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://desafioonline.webmotors.com.br/api/OnlineChallenge/Vehicles?Page=2",
+					"protocol": "http",
+					"host": [
+						"desafioonline",
+						"webmotors",
+						"com",
+						"br"
+					],
+					"path": [
+						"api",
+						"OnlineChallenge",
+						"Vehicles"
+					],
+					"query": [
+						{
+							"key": "Page",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET {Vehicles}/Page=3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7312bd6c-7ec0-40f4-a073-01eb93de86cf",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Não contém Honda City e sua versão na página 3\", function () {",
+							"    pm.expect(pm.response.text()).to.not.include(\"Honda\");",
+							"    pm.expect(pm.response.text()).to.not.include(\"City\");",
+							"});",
+							"",
+							"pm.test(\"Validando os campos Honda City e sua versão na página 3\", function () {",
+							"    pm.expect(jsonData[0].Make).to.not.eql(\"Honda\");",
+							"    pm.expect(jsonData[0].Model).to.not.eql(\"City\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://desafioonline.webmotors.com.br/api/OnlineChallenge/Vehicles?Page=3",
+					"protocol": "http",
+					"host": [
+						"desafioonline",
+						"webmotors",
+						"com",
+						"br"
+					],
+					"path": [
+						"api",
+						"OnlineChallenge",
+						"Vehicles"
+					],
+					"query": [
+						{
+							"key": "Page",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
